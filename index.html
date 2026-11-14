@@ -43,7 +43,7 @@
 
   <section class="wrap" id="abstract" aria-labelledby="abstract-h">
     <h2 id="abstract-h">Abstract</h2>
-    <p>Long-horizon embodied execution remains challenging due to dynamic language grounding, heterogeneous tool coordination, and cumulative failure recovery. While existing LLM agents orchestrate perception, planning, and VLA control, they cannot consistently convert execution experience into validated, reusable procedures for cross-task and cross-embodiment generalization. We present EvoTER, an experience-driven framework that enables embodied agents to self-evolve tool-use skills without updating model parameters. EvoTER operates through a three-role evolution loop: Explorer records tool-use trajectories; Diagnoser distills successful and failed executions into skills for tool selection, parameter computation, postcondition checks, and recovery; and Validator retains candidate revisions only when they improve complete-task success in fresh sessions. On RoboCasa365 Target50, EvoTER raises overall success from 53.60% with an empty skill library to 80.40%. On a Franka robot, simulation initialization reduces the attempts required to acquire short-horizon skills, while continued real-world evolution improves long-horizon success from 20% to 80%&ndash;100% across tasks and enables the evolving skill library to incorporate new tool functionality introduced after simulation development.</p>
+    <p>Long-horizon embodied execution remains challenging due to dynamic language grounding, heterogeneous tool coordination, and cumulative failure recovery. LLM agents can orchestrate perception, planning and VLA control, but turning execution experience into validated, reusable procedures across tasks and embodiments remains challenging. We present EvoTER, an experience-driven framework that enables embodied agents to self-evolve tool-use skills without updating model parameters. EvoTER operates through a three-role evolution loop: Explorer records tool-use trajectories; Diagnoser distills successful and failed executions into skills for tool selection, parameter computation, postcondition checks, and recovery; and Validator retains candidate revisions only when they improve complete-task success in fresh sessions. On RoboCasa365 Target50, EvoTER raises overall validation success from 53.60% with an empty skill library to 80.40%. On a Franka robot, simulation initialization reduces the attempts required to acquire short-horizon skills, while continued real-world evolution improves long-horizon success from 20% to 80%&ndash;100% across tasks and enables the evolving skill library to incorporate new tool functionality introduced after simulation development.</p>
   </section>
 
   <section class="wrap" id="method" aria-labelledby="method-h">
@@ -79,7 +79,7 @@
         <p>Compares candidate and current libraries on matched validation instances in fresh sessions using ordinary tools.</p>
       </article>
     </div>
-    <p class="validation-rule"><strong>Retain a revision only if</strong> candidate complete-task SR &gt; current SR. Otherwise, return to Diagnoser.</p>
+    <p class="validation-rule"><strong>Retain a revision only if</strong> candidate complete-task success rate &gt; current success rate. Otherwise, return to Diagnoser.</p>
 
     <div class="transfer-flow" aria-label="Simulation-to-real skill transfer">
       <strong>Sim-to-real</strong>
@@ -123,7 +123,7 @@
     <p class="note">External results retain their reported rounding; &ldquo;&ndash;&rdquo; denotes an unreported subset or an unavailable full-benchmark result. <sup>a</sup> Uses the specially trained HexaModel v0.1. <sup>b</sup> EvoTER entries report validation scores used for skill-library selection. <sup>&dagger;</sup> Combined success rate over Composite-Seen and Composite-Unseen.</p>
     <p class="note">Seen/Unseen refers to task exposure during VLA training; development episodes from Composite-Unseen tasks may contribute to skill evolution.</p>
 
-    <h3 id="evolution-h">Skill evolution across three rounds</h3>
+    <h3 id="evolution-h">Initial evaluation and three evolution rounds</h3>
     <figure class="figure figure-wide" aria-labelledby="evolution-h">
       <img src="assets/img/fig2_evolution.webp?v=20261113-v5" width="2600" height="952" loading="lazy"
            alt="Two-panel evolution chart. (a) Overall success at iterations 1 through 4: 53.60%, 61.60%, 77.20% and 80.40%. (b) Performance by task suite, ending at 94.44% Atomic, 78.75% Composite-Seen and 66.25% Composite-Unseen. Iteration 1 uses the empty library.">
@@ -158,7 +158,7 @@
   <!-- SIM-CASES:BEGIN -->
   <section class="wrap" id="sim-cases" aria-labelledby="sim-cases-h">
     <h2 id="sim-cases-h">Simulation Case Studies</h2>
-    <p>More skill revisions from RoboCasa365 development, grouped by the revision types of Fig. 4. Each case shows the failure that triggered diagnosis and the execution after the revision. Clips and frames are native 256&nbsp;&times;&nbsp;256 simulator views at 1&times; speed. The label on each case states where its footage comes from: a single episode, or an earlier and a later run on the same seed, with or without privileged diagnosis. These cases are qualitative illustrations; quantitative results are reported above.</p>
+    <p>Development examples from RoboCasa365, grouped by the revision types in Fig. 4. The cases connect observed failures, recovery behavior and the resulting skill revisions. Videos run at 1&times;; case labels identify single-episode recoveries, separate runs on the same seed and the use of privileged diagnosis. Quantitative results are reported above.</p>
     <div class="case-nav" role="tablist" aria-label="Simulation cases">
       <div class="case-group"><span class="case-group-label">Parameter computation</span><button type="button" role="tab" id="tab-deliver" aria-controls="case-deliver">DeliverStraw</button><button type="button" role="tab" id="tab-knob" aria-controls="case-knob">SearingMeat (knob)</button><button type="button" role="tab" id="tab-coffee" aria-controls="case-coffee">PrepareCoffee</button></div>
       <div class="case-group"><span class="case-group-label">Script construction</span><button type="button" role="tab" id="tab-blender" aria-controls="case-blender">CloseBlenderLid</button></div>
@@ -259,15 +259,15 @@
           <dt>Failure</dt><dd>The fixed base and the movable ridge of the stove knob sit close together. The first close gripped the base, and a non-zero gripper opening suggested progress that was not there.</dd>
           <dt>Skill revision</dt><dd>Distinguish the movable ridge from the fixed base; if the base is contacted, open, back off and reduce the insertion depth; then turn in small steps and check the actual progress after each one.</dd>
         </dl>
-        <p class="note">Contact information from the privileged interface was used during this diagnosis; the rule was written after the episode, and seed 4 continued diagnosis with it.</p>
+        <p class="note">Privileged contact feedback informed the diagnosis. The resulting grasping rule was used in a follow-up development trial.</p>
         <div class="sim-videos">
           <figure class="video-card sim-video">
             <video data-autoplay muted loop playsinline preload="none" poster="assets/sim/knob/seed1.jpg" width="256" height="256"><source src="assets/sim/knob/seed1.mp4" type="video/mp4"></video>
-            <figcaption>Seed 1: contact corrected, burner lit &middot; 1&times;</figcaption>
+            <figcaption>Development trial: contact corrected, burner lit &middot; 1&times;</figcaption>
           </figure>
           <figure class="video-card sim-video">
             <video data-autoplay muted loop playsinline preload="none" poster="assets/sim/knob/seed4.jpg" width="256" height="256"><source src="assets/sim/knob/seed4.mp4" type="video/mp4"></video>
-            <figcaption>Seed 4: centred grip, controller hand-off &middot; 1&times;</figcaption>
+            <figcaption>Follow-up trial: centred grip, controller hand-off &middot; 1&times;</figcaption>
           </figure>
         </div>
         <ol class="sim-frames">
@@ -308,12 +308,12 @@
       </article>
       <article class="case-panel" id="case-blender" role="tabpanel" aria-labelledby="tab-blender" tabindex="0">
         <h3>CloseBlenderLid: From privileged diagnosis to RGB-D scripts</h3>
-        <p class="case-tags"><span class="tag tag-fig">In Fig. 4</span><span class="tag">Development · new observation tools, no privileged access</span></p>
+        <p class="case-tags"><span class="tag tag-fig">In Fig. 4</span><span class="tag">Development · RGB-D observation tools · no privileged access</span></p>
         <dl class="case-text">
           <dt>Failure</dt><dd>After VLA placement the lid sat tilted and unseated. A reached pose or an opened gripper did not show whether the lid was held, supported by the jar, or seated.</dd>
           <dt>Skill revision</dt><dd>Privileged diagnosis separated grasp, support and separation states. Diagnoser distilled it into two deployment-compatible RGB-D scripts &mdash; <code>estimate_assembly_geometry</code> (plane fit, tilt and cross-view consistency of a selected region) and <code>compare_assembly_states</code> (response of the object to a short action) &mdash; and a skill that specifies when to measure, short-lift, re-check, and hand back to VLA.</dd>
         </dl>
-        <p class="note">This recovery episode used the new tools without privileged access and precedes the skill commit.</p>
+        <p class="note">The RGB-D tools were fixed before formal skill evolution and evaluation. This development recovery uses ordinary observations and informed the subsequent skill.</p>
         <div class="sim-videos">
           <figure class="video-card sim-video">
             <video data-autoplay muted loop playsinline preload="none" poster="assets/sim/blender/before.jpg" width="256" height="256"><source src="assets/sim/blender/before.mp4" type="video/mp4"></video>
@@ -326,7 +326,7 @@
         </div>
         <ol class="sim-frames">
           <li><img src="assets/sim/blender/k1.webp" width="256" height="256" loading="lazy" alt="Lid unseated after VLA placement"><span>Lid unseated after VLA placement</span></li>
-          <li><img src="assets/sim/blender/k2.webp" width="256" height="256" loading="lazy" alt="Lid plane fitted by the new tool"><span>Lid plane fitted by the new tool</span></li>
+          <li><img src="assets/sim/blender/k2.webp" width="256" height="256" loading="lazy" alt="Lid plane fitted from RGB-D"><span>Lid plane fitted from RGB-D</span></li>
           <li><img src="assets/sim/blender/k3.webp" width="256" height="256" loading="lazy" alt="Re-approach the central grip"><span>Re-approach the central grip</span></li>
           <li><img src="assets/sim/blender/k4.webp" width="256" height="256" loading="lazy" alt="Re-grasp, short lift, re-observe"><span>Re-grasp, short lift, re-observe</span></li>
           <li><img src="assets/sim/blender/k5.webp" width="256" height="256" loading="lazy" alt="Adjust pose, lower in segments"><span>Adjust pose, lower in segments</span></li>
@@ -338,9 +338,9 @@
           <p class="note">Recorded motion at 1&times; with paused holds that show each actual tool call, its logged inputs and outputs, and the rule later written into the skill.</p>
         </details>
         <details class="skill-text">
-          <summary>Skill text: what changed from v0.1 to v0.2</summary>
+          <summary>Development record: observation tools and skill revisions</summary>
           <p>Skill <code>observable-planar-seating</code>: Recover an observed removable cover resting tilted or incompletely seated on a matching rim or support, using current RGB-D, grasp retention and separation evidence. Use for planar seating relations; not threaded, latched or force-fit closure.</p>
-          <p>Version 0.1 was written from the privileged diagnosis and the recovery episode above. When it was run in fresh sessions, the state comparisons returned <code>unknown</code>, exposing gaps in what counted as progress and in how the lid face was measured. The revision to v0.2 below rewrites the intervention trigger and the evidence required for surface selection, retention and release; the comparison tool was revised alongside it to test the response of the selected plane rather than the motion of its visible centre (see the tool code diff).</p>
+          <p>This record documents tool and skill preparation before formal evolution and evaluation. Early trials with v0.1 returned <code>unknown</code> state comparisons, motivating clearer progress checks and lid-face selection. Version 0.2 revises these rules and the comparison tool to assess the selected plane rather than its visible centre. The resulting tool implementation was then held fixed in the formal runs; the original skill and tool changes are available below.</p>
           <p class="diff-legend"><ins>added in v0.2</ins> <del>removed from v0.1</del> <span class="d-ctx-key">unchanged context, shortened</span></p>
           <div class="skill-diff">
 <p class="d-gap" aria-hidden="true">&middot;&middot;&middot;</p>
@@ -425,12 +425,12 @@
       </article>
       <article class="case-panel" id="case-stack" role="tabpanel" aria-labelledby="tab-stack" tabindex="0">
         <h3>StackBowlsCabinet: Nest at the source, transport as one unit</h3>
-        <p class="case-tags"><span class="tag tag-fig">In Fig. 4</span><span class="tag">Failed run vs. fresh-context run, same seed · no privileged access</span></p>
+        <p class="case-tags"><span class="tag tag-fig">In Fig. 4</span><span class="tag">Development trials · same seed · no privileged access</span></p>
         <dl class="case-text">
           <dt>Failure</dt><dd>Stacking inside the cabinet left the small bowl leaning on the rim of the large bowl.</dd>
           <dt>Skill revision</dt><dd>Nest the bowls in the open source area first, verify that they move together, then transport the pair as a single planning unit and finish delivery with geometry tools if transport stalls.</dd>
         </dl>
-        <p class="note">The second run started from a fresh context without privileged information; explicit state and subgoal prompts were used.</p>
+        <p class="note">The recovery trial used a fresh agent context, ordinary observations and explicit state and subgoal prompts.</p>
         <div class="sim-videos">
           <figure class="video-card sim-video">
             <video data-autoplay muted loop playsinline preload="none" poster="assets/sim/stack/before.jpg" width="256" height="256"><source src="assets/sim/stack/before.mp4" type="video/mp4"></video>
@@ -438,11 +438,11 @@
           </figure>
           <figure class="video-card sim-video">
             <video data-autoplay muted loop playsinline preload="none" poster="assets/sim/stack/assemble.jpg" width="256" height="256"><source src="assets/sim/stack/assemble.mp4" type="video/mp4"></video>
-            <figcaption>Fresh run: nest, then lift together &middot; 1&times;</figcaption>
+            <figcaption>Recovery trial: nest, then lift together &middot; 1&times;</figcaption>
           </figure>
           <figure class="video-card sim-video">
             <video data-autoplay muted loop playsinline preload="none" poster="assets/sim/stack/deliver.jpg" width="256" height="256"><source src="assets/sim/stack/deliver.mp4" type="video/mp4"></video>
-            <figcaption>Fresh run: deliver the pair &middot; 1&times;</figcaption>
+            <figcaption>Recovery trial: deliver the pair &middot; 1&times;</figcaption>
           </figure>
         </div>
         <ol class="sim-frames">
@@ -455,7 +455,7 @@
         </ol>
         <details class="skill-text">
           <summary>Skill text: source assembly before transport</summary>
-          <p>The candidate policy used in the fresh-context run above (excerpt, verbatim). The file itself notes that it is a candidate policy, not a validated success claim.</p>
+          <p>Candidate policy used in the recovery trial above (verbatim excerpt).</p>
           <blockquote class="skill-quote">When a goal combines containment and transport, test the source-assembly motif from observable_subgoal_sequence.md when its current visual and reachability preconditions hold. Verify stable assembly before transporting the composite. If those preconditions do not hold, choose a different ordering from current evidence.</blockquote>
           <blockquote class="skill-quote">Check the requested object-object relation separately from placement at the destination. Parallel placement, a vertical object leaning on a rim, or an object moving with an allegedly released gripper requires recovery. Stop blind continuation when the base drifts away from a local unresolved relation. Re-localize first.</blockquote>
           <p class="skill-dl-h">Full files (verbatim)</p>
@@ -518,7 +518,7 @@
       <table class="results compact">
         <caption>w/o Sim: evolution from an empty library; w/ Sim: evolution initialized from the frozen simulation library. Development attempts and token costs accumulate until the first complete-task success; success counts frozen-test trials out of 5. M = 10<sup>6</sup> tokens. Bold marks the better result within each pair.</caption>
         <thead>
-          <tr><th scope="col" rowspan="2">Task</th><th scope="colgroup" colspan="2">Attempts &darr;</th><th scope="colgroup" colspan="2">Output tokens (M) &darr;</th><th scope="colgroup" colspan="2">Total tokens (M) &darr;</th><th scope="colgroup" colspan="2">Success &uarr;</th></tr>
+          <tr><th scope="col" rowspan="2">Task</th><th scope="colgroup" colspan="2">Attempts &darr;</th><th scope="colgroup" colspan="2">Output tokens (M) &darr;</th><th scope="colgroup" colspan="2">Total tokens (M) &darr;</th><th scope="colgroup" colspan="2">Success (k/5) &uarr;</th></tr>
           <tr><th scope="col">w/o Sim</th><th scope="col">w/ Sim</th><th scope="col">w/o Sim</th><th scope="col">w/ Sim</th><th scope="col">w/o Sim</th><th scope="col">w/ Sim</th><th scope="col">w/o Sim</th><th scope="col">w/ Sim</th></tr>
         </thead>
         <tbody>
@@ -532,7 +532,7 @@
     <!-- REAL-SHORT-CASES:BEGIN -->
     <div class="real-short-cases" id="real-short-cases">
       <h4>Real-world failure and success examples</h4>
-      <p class="rsc-intro">The plate example pairs an orange-plate failure with a retry after an operator reset. The straw clips compare insertion failures and success using large bowls, transparent cups and the same fixed-camera view; all clips play at 2&times; actual speed. These qualitative examples are separate from the quantitative evaluation above.</p>
+      <p class="rsc-intro">Short-horizon skill demonstrations at 2&times; speed. The table above reports frozen-test results; video labels distinguish development, frozen-skill execution and same-session reuse.</p>
 
       <article class="rsc-case" aria-labelledby="rsc-plate-title">
         <h5 id="rsc-plate-title">Move plate from rack to mat</h5>
@@ -541,18 +541,18 @@
             <p class="rsc-label"><strong>EvoTER</strong> &middot; w/ Sim &middot; Development</p>
             <span class="rsc-phase">Approach, grasp and failed lift &middot; 2&times;</span>
             <video data-playback-rate="0.25" data-autoplay loop controls muted playsinline preload="none" poster="assets/real-short-cases/plate_orange_failure_v2.jpg" width="640" height="480" aria-label="EvoTER development failure: the orange plate slips during lift, two times speed"><source src="assets/real-short-cases/plate_orange_failure_context_8x.mp4" type="video/mp4"></video>
-            <figcaption>The orange plate slips free during the lift and falls beside the rack.<span class="rsc-meta">Development round 2 &middot; first attempt</span></figcaption>
+            <figcaption>The orange plate slips free during the lift and falls beside the rack.<span class="rsc-meta">Development demonstration &middot; failed lift</span></figcaption>
           </figure>
           <figure class="video-card">
             <p class="rsc-label"><strong>EvoTER</strong> &middot; w/ Sim &middot; Retry after reset</p>
             <span class="rsc-phase">Grasp, transfer and release &middot; 2&times;</span>
             <video data-playback-rate="0.25" data-autoplay loop controls muted playsinline preload="none" poster="assets/video/short_plate.jpg?v=20261114-no-speed-badge" width="640" height="480" aria-label="Successful retry with the same orange plate after an operator reset, two times speed"><source src="assets/video/short_plate.mp4?v=20261114-no-speed-badge" type="video/mp4"></video>
-            <figcaption>After an operator reset, the same orange plate is grasped and placed face up on the mat.<span class="rsc-meta">Development round 2 &middot; reset-assisted retry &middot; same fixed camera</span></figcaption>
+            <figcaption>After an operator reset, the same orange plate is grasped and placed face up on the mat.<span class="rsc-meta">Development demonstration &middot; reset-assisted retry &middot; same fixed camera</span></figcaption>
           </figure>
         </div>
         <details class="rsc-context">
           <summary>Run context</summary>
-          <p>Both clips use the same orange plate, rack, mat and fixed camera. An operator reset the plate between attempts; contact and force choices also changed. The original trial remains failed, and the retry is shown as a development recovery rather than an independent test.</p>
+          <p>Both development clips use the same orange plate, rack, mat and fixed camera. An operator reset the plate between the failed lift and retry; the retry uses revised contact and force settings.</p>
         </details>
       </article>
 
@@ -561,21 +561,21 @@
         <p class="rsc-intro"><strong>Visual challenge.</strong> The transparent cup and thin, transparent straw have faint boundaries against the background, making the cup rim and straw tip difficult to localize. The agent must align the straw with the opening and verify that it remains inside after release.</p>
         <div class="rsc-pair">
           <figure class="video-card">
-            <p class="rsc-label"><strong>Baseline</strong> &middot; w/o Sim &middot; Frozen reuse</p>
+            <p class="rsc-label"><strong>Baseline</strong> &middot; w/o Sim &middot; Frozen-skill execution</p>
             <span class="rsc-phase">Insertion and release fail &middot; 2&times;</span>
             <video data-playback-rate="0.25" data-autoplay loop controls muted playsinline preload="none" poster="assets/real-short-cases/straw_insertion_failure_v2.jpg" width="640" height="480" aria-label="Baseline insertion-stage failure with a transparent straw and cup: after release the straw does not remain inside the cup, two times speed"><source src="assets/real-short-cases/straw_insertion_failure_8x.mp4" type="video/mp4"></video>
-            <figcaption>After alignment and release, the straw ends outside the cup; its lower end does not remain inside.<span class="rsc-meta">Frozen reuse round 1 &middot; large bowl &middot; insertion-stage excerpts</span></figcaption>
+            <figcaption>After alignment and release, the straw ends outside the cup; its lower end does not remain inside.<span class="rsc-meta">Large bowl &middot; insertion-stage excerpts</span></figcaption>
           </figure>
           <figure class="video-card">
-            <p class="rsc-label"><strong>EvoTER</strong> &middot; w/ Sim &middot; Successful reuse</p>
+            <p class="rsc-label"><strong>EvoTER</strong> &middot; w/ Sim &middot; Same-session reuse</p>
             <span class="rsc-phase">Insertion, release and withdrawal succeed &middot; 2&times;</span>
             <video data-playback-rate="0.25" data-autoplay loop controls muted playsinline preload="none" poster="assets/real-short-cases/straw_insertion_success_v2.jpg" width="640" height="480" aria-label="Successful insertion of a transparent straw into a transparent cup, with a large bowl and the same fixed-camera view, two times speed"><source src="assets/real-short-cases/straw_insertion_success_8x.mp4" type="video/mp4"></video>
-            <figcaption>The straw remains inside the cup after release and withdrawal.<span class="rsc-meta">Reuse round 2 &middot; large bowl &middot; context retained</span></figcaption>
+            <figcaption>The straw remains inside the cup after release and withdrawal.<span class="rsc-meta">Large bowl &middot; insertion-stage excerpts</span></figcaption>
           </figure>
         </div>
         <details class="rsc-context">
           <summary>Run context</summary>
-          <p>Both clips show large white bowls, transparent cups and transparent straws, the same fixed-camera view and the cup-alignment, release and withdrawal stage at two times speed. Object positions and background items differ. The baseline uses a frozen Real-derived skill learned without Sim; the successful clip is Sim-initialized same-session reuse after a restart, rather than an independent frozen evaluation.</p>
+          <p>The clips show transparent cups and straws with large white bowls, from the same fixed-camera view; object positions and background items differ. The baseline executes a frozen skill developed without simulation initialization. The EvoTER clip shows same-session reuse of a simulation-initialized skill.</p>
         </details>
       </article>
 
@@ -586,13 +586,13 @@
             <p class="rsc-label"><strong>Baseline</strong> &middot; w/o Sim &middot; Development</p>
             <span class="rsc-phase">Approach, lift, transfer and missed pour &middot; 2&times;</span>
             <video data-playback-rate="0.25" data-autoplay loop controls muted playsinline preload="none" poster="assets/real-short-cases/egg_failure_context_8x.jpg" width="640" height="480" aria-label="Baseline approach, pan lift, transfer and failed egg pouring, two times speed; a separate observation shows the missed plate"><source src="assets/real-short-cases/egg_failure_context_8x.mp4" type="video/mp4"></video>
-            <figcaption>The final tilt does not leave the egg on the target plate; the next observation shows it on the rack base.<span class="rsc-meta">Development round 1 &middot; the motion view occludes the landing</span><a class="rsc-observation" href="assets/real-short-cases/egg_final_observation.jpg" target="_blank" rel="noopener"><img src="assets/real-short-cases/egg_final_observation.jpg" width="640" height="480" loading="lazy" alt="Separate post-action observation from another fixed camera: the egg rests on the wooden rack base beside the empty blue plate">Final observation &middot; alternate fixed camera</a></figcaption>
+            <figcaption>The final tilt does not leave the egg on the target plate; the next observation shows it on the rack base.<span class="rsc-meta">Development demonstration &middot; landing occluded in the motion view</span><a class="rsc-observation" href="assets/real-short-cases/egg_final_observation.jpg" target="_blank" rel="noopener"><img src="assets/real-short-cases/egg_final_observation.jpg" width="640" height="480" loading="lazy" alt="Separate post-action observation from another fixed camera: the egg rests on the wooden rack base beside the empty blue plate">Final observation &middot; alternate fixed camera</a></figcaption>
           </figure>
           <figure class="video-card">
-            <p class="rsc-label"><strong>EvoTER</strong> &middot; w/ Sim &middot; Successful reuse</p>
+            <p class="rsc-label"><strong>EvoTER</strong> &middot; w/ Sim &middot; Same-session reuse</p>
             <span class="rsc-phase">Grasp, transfer and pour &middot; 2&times;</span>
             <video data-playback-rate="0.25" data-autoplay loop controls muted playsinline preload="none" poster="assets/video/short_egg.jpg?v=20261114-no-speed-badge" width="640" height="480" aria-label="Successful same-session egg-pouring skill reuse, two times speed"><source src="assets/video/short_egg.mp4?v=20261114-no-speed-badge" type="video/mp4"></video>
-            <figcaption>The egg is poured onto the plate and remains supported while the pan is held still.<span class="rsc-meta">Reuse round 2 &middot; context retained</span></figcaption>
+            <figcaption>The egg is poured onto the plate and remains supported while the pan is held still.<span class="rsc-meta">Same-session reuse after development</span></figcaption>
           </figure>
         </div>
         <details class="rsc-context">
@@ -618,7 +618,7 @@
 
   <section class="wrap" id="videos" aria-labelledby="videos-h">
     <h2 id="videos-h">Videos</h2>
-    <p>Long-horizon real-robot executions at 2&times; actual speed. Table setting shows a separate rerun: recorded action windows are joined, with the initial idle segment trimmed. For two-cup hanging, the pink and blue task execution clips are joined; reset, preparation and waiting between cups are omitted. See <a href="#tether-cases">Tether Case Studies</a> for individual native failures and evolved-skill successes.</p>
+    <p>Long-horizon task demonstrations at 2&times; speed. See <a href="#tether-cases">Tether Case Studies</a> for native-reference failures and evolved-skill successes.</p>
     <div class="video-grid" aria-label="Three long-horizon real-robot task videos">
       <figure class="video-card">
         <video data-playback-rate="0.25" data-autoplay muted loop playsinline controls preload="none" poster="assets/video/drawer_storage.jpg?v=20261114-no-speed-badge" width="640" height="480"><source src="assets/video/drawer_storage.mp4?v=20261114-no-speed-badge" type="video/mp4"></video>
@@ -626,13 +626,17 @@
       </figure>
       <figure class="video-card">
         <video data-playback-rate="0.25" data-autoplay muted loop playsinline controls preload="none" poster="assets/video/table_setting.jpg?v=20261114-no-speed-badge" width="640" height="480"><source src="assets/video/table_setting.mp4?v=20261114-no-speed-badge" type="video/mp4"></video>
-        <figcaption>Table setting &middot; rerun &middot; 2&times;</figcaption>
+        <figcaption>Table setting &middot; 2&times;</figcaption>
       </figure>
       <figure class="video-card">
-        <video data-autoplay muted loop playsinline controls preload="none" poster="assets/video/two_cup_hanging.jpg" width="640" height="480" aria-label="R9 evolved skill: both cups successfully hung, pink then blue"><source src="assets/video/two_cup_hanging.mp4" type="video/mp4"></video>
-        <figcaption>Two-cup hanging with Tether, agent-selected references &middot; 2&times;</figcaption>
+        <video data-autoplay muted loop playsinline controls preload="none" poster="assets/video/two_cup_hanging.jpg" width="640" height="480" aria-label="Evolved skill: both cups successfully hung, pink then blue"><source src="assets/video/two_cup_hanging.mp4" type="video/mp4"></video>
+        <figcaption>Two-cup hanging &middot; 2&times;</figcaption>
       </figure>
     </div>
+    <details class="method-details">
+      <summary>Video recording details</summary>
+      <p>The table-setting video is a demonstration recorded separately from the five-trial evaluation. Recorded action windows are joined and the initial idle segment is trimmed. For two-cup hanging, pink- and blue-cup action recordings are joined; scene reset, preparation and waiting between cups are omitted.</p>
+    </details>
   </section>
 
   <!-- TETHER-CASES:BEGIN -->
@@ -664,17 +668,17 @@
       </article>
       <article class="case-panel" id="case-tether-blue" role="tabpanel" aria-labelledby="tab-tether-blue" tabindex="0">
         <h3>Blue cup: getting the release onto the rod</h3>
-        <p class="case-tags"><span class="tag">Native R7 · Evolved R9 blue phase · Same blue-cup demonstration</span></p>
+        <p class="case-tags"><span class="tag">Native and skill-guided references · same blue-cup demonstration</span></p>
         <p class="tether-context">Both trials lift the blue cup. In the native trial it falls onto the table at release; with agent-selected references it remains hanging after the gripper withdraws.</p>
         <div class="video-grid video-pair tether-grid">
           <figure class="video-card">
             <div class="tether-video-label"><strong>Native Tether</strong><span class="tether-outcome tether-failed">Failed</span></div>
-            <video data-autoplay muted loop playsinline controls preload="none" poster="assets/video/tether/blue_native_release.jpg" width="960" height="540" aria-label="Native Tether R7 blue-cup failure: cup falls onto the table at release"><source src="assets/video/tether/blue_native_release.mp4" type="video/mp4"></video>
+            <video data-autoplay muted loop playsinline controls preload="none" poster="assets/video/tether/blue_native_release.jpg" width="960" height="540" aria-label="Native Tether blue-cup failure: cup falls onto the table at release"><source src="assets/video/tether/blue_native_release.mp4" type="video/mp4"></video>
             <figcaption>Cup lifted, then dropped onto the table near the rack.<span class="tether-cue">Release at 11&ndash;13 s &middot; 2&times;</span></figcaption>
           </figure>
           <figure class="video-card">
             <div class="tether-video-label"><strong>Evolved skill &middot; Agent-selected references</strong><span class="tether-outcome tether-succeeded">Hung</span></div>
-            <video data-autoplay muted loop playsinline controls preload="none" poster="assets/video/tether/blue_agent_release.jpg" width="960" height="540" aria-label="Evolved skill R9 blue phase: blue cup remains hanging after release"><source src="assets/video/tether/blue_agent_release.mp4" type="video/mp4"></video>
+            <video data-autoplay muted loop playsinline controls preload="none" poster="assets/video/tether/blue_agent_release.jpg" width="960" height="540" aria-label="Evolved skill: blue cup remains hanging after release"><source src="assets/video/tether/blue_agent_release.mp4" type="video/mp4"></video>
             <figcaption>Blue cup hung beside the pink cup; gripper retreats.<span class="tether-cue">Release at 12&ndash;13 s &middot; 2&times;</span></figcaption>
           </figure>
         </div>
@@ -697,7 +701,7 @@
         </div>
       </article>
     </div>
-    <p class="note tether-provenance">Each comparison shows separate trials after scene resets. The pink-cup pairs are development examples; the blue pair compares native R7 with the blue phase of evolved R9. All clips retain the complete recorded action window at 2&times; speed, in the same camera view.</p>
+    <p class="note tether-provenance">Comparisons use separate trials with scene resets between conditions. The pink-cup pairs are development demonstrations; the blue-cup pair compares native and skill-guided reference selection using the same demonstration. All clips show the complete recorded action window at 2&times; speed from the same camera view.</p>
 
     <div class="tether-extra">
       <h3>Beyond the original cup layout</h3>
@@ -711,7 +715,7 @@
           <figure class="video-card">
             <div class="tether-video-label"><strong>Different target &middot; Gray cup</strong><span class="tether-outcome tether-succeeded">Hung</span></div>
             <video data-autoplay muted loop playsinline controls preload="none" poster="assets/video/tether/gray_agent_transfer.jpg" width="960" height="540" aria-label="Agent-selected references: gray target successfully hung using the pink-cup demonstration"><source src="assets/video/tether/gray_agent_transfer.mp4" type="video/mp4"></video>
-            <figcaption>Pink-cup demonstration reused for the gray target. The gray cup remains hung after withdrawal, verified in the video.<span class="tether-cue">Development trial &middot; 2&times;</span></figcaption>
+            <figcaption>Pink-cup demonstration reused for the gray target. The gray cup remains hanging after release and gripper withdrawal.<span class="tether-cue">Development trial &middot; 2&times;</span></figcaption>
           </figure>
       </div>
       <p class="note tether-provenance">These two trials illustrate additional successful transfers; matching native trials in these cluttered layouts are not included. The neighboring blue cup changes angle in both executions. Quantitative evaluation remains as reported in <a href="#real">Real-World Experiments</a>.</p>
