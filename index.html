@@ -532,21 +532,21 @@
     <!-- REAL-SHORT-CASES:BEGIN -->
     <div class="real-short-cases" id="real-short-cases">
       <h4>Real-world failure and success examples</h4>
-      <p class="rsc-intro">The plate example pairs an orange-plate failure with a retry after an operator reset. The straw clips compare insertion failures and success using large bowls, transparent cups and the same fixed-camera view; all clips play at 8&times;. These qualitative examples are separate from the quantitative evaluation above.</p>
+      <p class="rsc-intro">The plate example pairs an orange-plate failure with a retry after an operator reset. The straw clips compare insertion failures and success using large bowls, transparent cups and the same fixed-camera view; all clips play at 2&times; actual speed. These qualitative examples are separate from the quantitative evaluation above.</p>
 
       <article class="rsc-case" aria-labelledby="rsc-plate-title">
         <h5 id="rsc-plate-title">Move plate from rack to mat</h5>
         <div class="rsc-pair">
           <figure class="video-card">
             <p class="rsc-label"><strong>EvoTER</strong> &middot; w/ Sim &middot; Development</p>
-            <span class="rsc-phase">Approach, grasp and failed lift &middot; 8&times;</span>
-            <video data-autoplay loop controls muted playsinline preload="none" poster="assets/real-short-cases/plate_orange_failure_v2.jpg" width="640" height="480" aria-label="EvoTER development failure: the orange plate slips during lift, eight times speed"><source src="assets/real-short-cases/plate_orange_failure_context_8x.mp4" type="video/mp4"></video>
+            <span class="rsc-phase">Approach, grasp and failed lift &middot; 2&times;</span>
+            <video data-playback-rate="0.25" data-autoplay loop controls muted playsinline preload="none" poster="assets/real-short-cases/plate_orange_failure_v2.jpg" width="640" height="480" aria-label="EvoTER development failure: the orange plate slips during lift, two times speed"><source src="assets/real-short-cases/plate_orange_failure_context_8x.mp4" type="video/mp4"></video>
             <figcaption>The orange plate slips free during the lift and falls beside the rack.<span class="rsc-meta">Development round 2 &middot; first attempt</span></figcaption>
           </figure>
           <figure class="video-card">
             <p class="rsc-label"><strong>EvoTER</strong> &middot; w/ Sim &middot; Retry after reset</p>
-            <span class="rsc-phase">Grasp, transfer and release &middot; 8&times;</span>
-            <video data-autoplay loop controls muted playsinline preload="none" poster="assets/video/short_plate.jpg" width="640" height="480" aria-label="Successful retry with the same orange plate after an operator reset, eight times speed"><source src="assets/video/short_plate.mp4" type="video/mp4"></video>
+            <span class="rsc-phase">Grasp, transfer and release &middot; 2&times;</span>
+            <video data-playback-rate="0.25" data-autoplay loop controls muted playsinline preload="none" poster="assets/video/short_plate.jpg?v=20261114-no-speed-badge" width="640" height="480" aria-label="Successful retry with the same orange plate after an operator reset, two times speed"><source src="assets/video/short_plate.mp4?v=20261114-no-speed-badge" type="video/mp4"></video>
             <figcaption>After an operator reset, the same orange plate is grasped and placed face up on the mat.<span class="rsc-meta">Development round 2 &middot; reset-assisted retry &middot; same fixed camera</span></figcaption>
           </figure>
         </div>
@@ -561,20 +561,20 @@
         <div class="rsc-pair">
           <figure class="video-card">
             <p class="rsc-label"><strong>Baseline</strong> &middot; w/o Sim &middot; Frozen reuse</p>
-            <span class="rsc-phase">Insertion and release fail &middot; 8&times;</span>
-            <video data-autoplay loop controls muted playsinline preload="none" poster="assets/real-short-cases/straw_insertion_failure_v2.jpg" width="640" height="480" aria-label="Baseline insertion-stage failure: after release the straw does not remain inside the cup, eight times speed"><source src="assets/real-short-cases/straw_insertion_failure_8x.mp4" type="video/mp4"></video>
+            <span class="rsc-phase">Insertion and release fail &middot; 2&times;</span>
+            <video data-playback-rate="0.25" data-autoplay loop controls muted playsinline preload="none" poster="assets/real-short-cases/straw_insertion_failure_v2.jpg" width="640" height="480" aria-label="Baseline insertion-stage failure: after release the straw does not remain inside the cup, two times speed"><source src="assets/real-short-cases/straw_insertion_failure_8x.mp4" type="video/mp4"></video>
             <figcaption>After alignment and release, the straw ends outside the cup; its lower end does not remain inside.<span class="rsc-meta">Frozen reuse round 1 &middot; large bowl &middot; insertion-stage excerpts</span></figcaption>
           </figure>
           <figure class="video-card">
             <p class="rsc-label"><strong>EvoTER</strong> &middot; w/ Sim &middot; Successful reuse</p>
-            <span class="rsc-phase">Insertion, release and withdrawal succeed &middot; 8&times;</span>
-            <video data-autoplay loop controls muted playsinline preload="none" poster="assets/real-short-cases/straw_insertion_success_v2.jpg" width="640" height="480" aria-label="Successful straw insertion with a large bowl and the same fixed-camera view, eight times speed"><source src="assets/real-short-cases/straw_insertion_success_8x.mp4" type="video/mp4"></video>
+            <span class="rsc-phase">Insertion, release and withdrawal succeed &middot; 2&times;</span>
+            <video data-playback-rate="0.25" data-autoplay loop controls muted playsinline preload="none" poster="assets/real-short-cases/straw_insertion_success_v2.jpg" width="640" height="480" aria-label="Successful straw insertion with a large bowl and the same fixed-camera view, two times speed"><source src="assets/real-short-cases/straw_insertion_success_8x.mp4" type="video/mp4"></video>
             <figcaption>The straw remains inside the cup after release and withdrawal.<span class="rsc-meta">Reuse round 2 &middot; large bowl &middot; context retained</span></figcaption>
           </figure>
         </div>
         <details class="rsc-context">
           <summary>Run context</summary>
-          <p>Both clips show large white bowls, transparent cups, the same fixed-camera view and the cup-alignment, release and withdrawal stage at eight times speed. Object positions and background items differ. The baseline uses a frozen Real-derived skill learned without Sim; the successful clip is Sim-initialized same-session reuse after a restart, rather than an independent frozen evaluation.</p>
+          <p>Both clips show large white bowls, transparent cups, the same fixed-camera view and the cup-alignment, release and withdrawal stage at two times speed. Object positions and background items differ. The baseline uses a frozen Real-derived skill learned without Sim; the successful clip is Sim-initialized same-session reuse after a restart, rather than an independent frozen evaluation.</p>
         </details>
       </article>
 
@@ -583,14 +583,14 @@
         <div class="rsc-pair">
           <figure class="video-card">
             <p class="rsc-label"><strong>Baseline</strong> &middot; w/o Sim &middot; Development</p>
-            <span class="rsc-phase">Approach, lift, transfer and missed pour &middot; 8&times;</span>
-            <video data-autoplay loop controls muted playsinline preload="none" poster="assets/real-short-cases/egg_failure_context_8x.jpg" width="640" height="480" aria-label="Baseline approach, pan lift, transfer and failed egg pouring, eight times speed; a separate observation shows the missed plate"><source src="assets/real-short-cases/egg_failure_context_8x.mp4" type="video/mp4"></video>
+            <span class="rsc-phase">Approach, lift, transfer and missed pour &middot; 2&times;</span>
+            <video data-playback-rate="0.25" data-autoplay loop controls muted playsinline preload="none" poster="assets/real-short-cases/egg_failure_context_8x.jpg" width="640" height="480" aria-label="Baseline approach, pan lift, transfer and failed egg pouring, two times speed; a separate observation shows the missed plate"><source src="assets/real-short-cases/egg_failure_context_8x.mp4" type="video/mp4"></video>
             <figcaption>The final tilt does not leave the egg on the target plate; the next observation shows it on the rack base.<span class="rsc-meta">Development round 1 &middot; the motion view occludes the landing</span><a class="rsc-observation" href="assets/real-short-cases/egg_final_observation.jpg" target="_blank" rel="noopener"><img src="assets/real-short-cases/egg_final_observation.jpg" width="640" height="480" loading="lazy" alt="Separate post-action observation from another fixed camera: the egg rests on the wooden rack base beside the empty blue plate">Final observation &middot; alternate fixed camera</a></figcaption>
           </figure>
           <figure class="video-card">
             <p class="rsc-label"><strong>EvoTER</strong> &middot; w/ Sim &middot; Successful reuse</p>
-            <span class="rsc-phase">Grasp, transfer and pour &middot; 8&times;</span>
-            <video data-autoplay loop controls muted playsinline preload="none" poster="assets/video/short_egg.jpg" width="640" height="480" aria-label="Successful same-session egg-pouring skill reuse, eight times speed"><source src="assets/video/short_egg.mp4" type="video/mp4"></video>
+            <span class="rsc-phase">Grasp, transfer and pour &middot; 2&times;</span>
+            <video data-playback-rate="0.25" data-autoplay loop controls muted playsinline preload="none" poster="assets/video/short_egg.jpg?v=20261114-no-speed-badge" width="640" height="480" aria-label="Successful same-session egg-pouring skill reuse, two times speed"><source src="assets/video/short_egg.mp4?v=20261114-no-speed-badge" type="video/mp4"></video>
             <figcaption>The egg is poured onto the plate and remains supported while the pan is held still.<span class="rsc-meta">Reuse round 2 &middot; context retained</span></figcaption>
           </figure>
         </div>
@@ -617,15 +617,15 @@
 
   <section class="wrap" id="videos" aria-labelledby="videos-h">
     <h2 id="videos-h">Videos</h2>
-    <p>Long-horizon real-robot executions, sped up as labeled. Table setting shows a separate rerun: recorded action windows are joined, with the initial idle segment trimmed. For two-cup hanging, the pink and blue task execution clips are joined; reset, preparation and waiting between cups are omitted. See <a href="#tether-cases">Tether Case Studies</a> for individual native failures and evolved-skill successes.</p>
+    <p>Long-horizon real-robot executions at 2&times; actual speed. Table setting shows a separate rerun: recorded action windows are joined, with the initial idle segment trimmed. For two-cup hanging, the pink and blue task execution clips are joined; reset, preparation and waiting between cups are omitted. See <a href="#tether-cases">Tether Case Studies</a> for individual native failures and evolved-skill successes.</p>
     <div class="video-grid" aria-label="Three long-horizon real-robot task videos">
       <figure class="video-card">
-        <video data-autoplay muted loop playsinline controls preload="none" poster="assets/video/drawer_storage.jpg" width="640" height="480"><source src="assets/video/drawer_storage.mp4" type="video/mp4"></video>
-        <figcaption>Drawer storage &middot; 8&times;</figcaption>
+        <video data-playback-rate="0.25" data-autoplay muted loop playsinline controls preload="none" poster="assets/video/drawer_storage.jpg?v=20261114-no-speed-badge" width="640" height="480"><source src="assets/video/drawer_storage.mp4?v=20261114-no-speed-badge" type="video/mp4"></video>
+        <figcaption>Drawer storage &middot; 2&times;</figcaption>
       </figure>
       <figure class="video-card">
-        <video data-autoplay muted loop playsinline controls preload="none" poster="assets/video/table_setting.jpg?v=20261113-8x" width="640" height="480"><source src="assets/video/table_setting.mp4?v=20261113-8x" type="video/mp4"></video>
-        <figcaption>Table setting &middot; rerun &middot; 8&times;</figcaption>
+        <video data-playback-rate="0.25" data-autoplay muted loop playsinline controls preload="none" poster="assets/video/table_setting.jpg?v=20261114-no-speed-badge" width="640" height="480"><source src="assets/video/table_setting.mp4?v=20261114-no-speed-badge" type="video/mp4"></video>
+        <figcaption>Table setting &middot; rerun &middot; 2&times;</figcaption>
       </figure>
       <figure class="video-card">
         <video data-autoplay muted loop playsinline controls preload="none" poster="assets/video/two_cup_hanging.jpg" width="640" height="480" aria-label="R9 evolved skill: both cups successfully hung, pink then blue"><source src="assets/video/two_cup_hanging.mp4" type="video/mp4"></video>
@@ -739,6 +739,6 @@
   </div>
 </footer>
 
-<script src="main.js?v=20261113-gallery-trim"></script>
+<script src="main.js?v=20261114-2x-no-badges"></script>
 </body>
 </html>

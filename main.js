@@ -33,6 +33,12 @@ document.querySelectorAll('.video-card video').forEach((video) => {
   video.addEventListener('error', showPlaceholder);
 });
 
+// Apply the configured playback rate before autoplay begins.
+document.querySelectorAll('video[data-playback-rate]').forEach((video) => {
+  video.defaultPlaybackRate = Number(video.dataset.playbackRate);
+  video.playbackRate = video.defaultPlaybackRate;
+});
+
 // Autoplay muted clips only while they are on screen; honour reduced-motion settings.
 const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const autoVideos = document.querySelectorAll('video[data-autoplay]');
