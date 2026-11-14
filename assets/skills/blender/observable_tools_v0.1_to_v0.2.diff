@@ -1,0 +1,65 @@
+--- v0.1/observable_tools.py
++++ v0.2/observable_tools.py
+@@ -1,10 +1,19 @@
+ """Version-bound assembly geometry and action-response verification tools."""
+ import uuid
+ import numpy as np
++from .observed_motion import compare_plane_response
+ from PIL import Image, ImageDraw
+-from .atomic_tools import AtomicRoboCasaToolAdapter, Detection, _schema, _points, CAMERAS
++from .atomic_tools import AtomicRoboCasaToolAdapter, Detection, _schema, CAMERAS
+ from .tool_runtime import ToolSpec
+ from .assembly_geometry import plane_geometry, relative_geometry, compare_states
++
++
++def _points(mask, depth, intrinsics):
++    fx, fy, cx, cy, transform = intrinsics
++    v, u = np.where(np.asarray(mask, dtype=bool) & np.isfinite(depth) & (depth > 0) & (depth < 5))
++    z = depth[v, u]
++    points = np.c_[(u-cx)*z/fx, (v-cy)*z/fy, z]
++    return points @ transform[:3,:3].T + transform[:3,3]
+ 
+ 
+ class ObservableAssemblyTools(AtomicRoboCasaToolAdapter):
+@@ -50,7 +59,7 @@
+             'Estimate observed lid plane, handle and cup rim from current RGB-D. Select lid face polygons or SAM detections; rim requires visible rim boundary points (>=12 total over views), not a filled vessel mask. Coordinates follow saved PNG. Reports uncertainty; never assumes hidden geometry.',schema),
+             self.estimate_assembly_geometry)
+         self.registry.register(ToolSpec('verification.compare_assembly_states',
+-            'Compare two observed states around a physical action. Following-hand is evidence of hold OR hooking, not guaranteed secure grasp. No simulator contacts are used.',
++            'Compare the same selected physical plane around a short near-translational normal lift/separation. Measures plane response, not patch-center motion; cannot verify tangential slip, surface identity or secure grasp. No simulator contacts are used.',
+             _schema({'before_id':dict(type='string'),'after_id':dict(type='string')},required=['before_id','after_id'])),
+             self.compare_assembly_states)
+ 
+@@ -93,7 +102,7 @@
+             else:
+                 fx,fy,cx,cy,transform=intrinsics
+                 uv=np.rint(pixels).astype(int); z=depth[uv[:,1],uv[:,0]]
+-                valid=np.isfinite(z)&(z>.1)&(z<5)
++                valid=np.isfinite(z)&(z>0)&(z<5)
+                 uv,z=uv[valid],z[valid]
+                 pc=np.c_[(uv[:,0]-cx)*z/fx,(uv[:,1]-cy)*z/fy,z]
+                 p=pc@transform[:3,:3].T+transform[:3,3]
+@@ -117,6 +126,14 @@
+                 geometry['normal_disagreement_deg']=float(normal_disagreement)
+                 geometry['reliable']=(geometry['view_count']>=2 and len(per_view)>=2 and
+                                       disagreement<.015 and normal_disagreement<5 and geometry['inlier_fraction']>.7)
++                # A selected patch can constrain attitude without locating the full object.
++                geometry['normal_quality'] = (
++                    'cross_view_consistent' if geometry['view_count'] >= 2 and
++                    len(per_view) >= 2 and normal_disagreement < 5 and geometry['inlier_fraction'] > .7
++                    else 'single_view_plane' if geometry['view_count'] == 1 and
++                    geometry['inlier_fraction'] > .7 and geometry['plane_rms_m'] < .003
++                    else 'unresolved')
++                geometry['normal_semantics'] = 'selected surface only; agent must justify relation to seating face'
+                 geometry['verification_status']='cross_view_consistent' if geometry['reliable'] else 'unverified_surface_selection'
+                 geometry['occlusion_limit']='visible extent may not equal full lid center' if role=='lid' else 'circle fit assumes circular visible rim'
+                 result[role]=geometry
+@@ -140,4 +157,7 @@
+ 
+     def compare_assembly_states(self,before_id,after_id):
+         before,after=self.assembly_states[before_id],self.assembly_states[after_id]
+-        return dict(before_id=before_id,after_id=after_id,**compare_states(before,after))
++        legacy = compare_states(before, after)
++        measured = compare_plane_response(before, after)
++        return dict(before_id=before_id, after_id=after_id, **measured,
++                    visible_centroid_diagnostic=legacy)

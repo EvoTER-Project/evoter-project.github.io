@@ -1,0 +1,84 @@
+{
+  "observation_id": 70,
+  "executed_function": "align_free_end",
+  "inputs": {
+    "segment_near": [
+      3.8333033723212924,
+      -3.4109179365078015,
+      1.1403705316235984
+    ],
+    "segment_tip": [
+      3.8444302610588643,
+      -3.4137450131862086,
+      1.114261705769716
+    ],
+    "tcp_position": [
+      3.7975877759443524,
+      -3.3971259671154437,
+      1.1879583212779117
+    ],
+    "tcp_quaternion_xyzw": [
+      0.5170714259147644,
+      -0.7031029462814331,
+      -0.37625208497047424,
+      0.3109952211380005
+    ],
+    "tip_goal": [
+      3.7786759730604857,
+      -3.425394600184249,
+      1.114261705769716
+    ],
+    "target_axis": [
+      0,
+      0,
+      -1
+    ]
+  },
+  "output": {
+    "position": [
+      3.764641888493622,
+      -3.4171113851109576,
+      1.2016461154764138
+    ],
+    "quaternion_xyzw": [
+      0.4467728581814384,
+      -0.6070306404529582,
+      -0.5068808054382629,
+      0.41830570617900686
+    ],
+    "quaternion_wxyz": [
+      0.41830570617900686,
+      0.4467728581814384,
+      -0.6070306404529582,
+      -0.5068808054382629
+    ],
+    "segment_length_m": 0.02852140955479335,
+    "tip_goal": [
+      3.7786759730604857,
+      -3.425394600184249,
+      1.114261705769716
+    ]
+  },
+  "middle_point_collinearity_error_m": 0.0005894083714018588,
+  "pixel_sources": {
+    "near": [
+      126,
+      123
+    ],
+    "tip": [
+      128,
+      127
+    ],
+    "middle_check": [
+      127,
+      125
+    ],
+    "cup_physical_foot": [
+      118,
+      154
+    ],
+    "camera": "agentview_right"
+  },
+  "goal_note": "XY from current upright cup physical foot, independently corroborated current RGB and prior same-episode exterior footprint comparison; Z remains CURRENT observed raised free-tip height, NOT glass opening height. This is an above-cup orientation/XY hypothesis, no release target.",
+  "pure_only": true
+}

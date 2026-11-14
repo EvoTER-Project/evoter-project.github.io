@@ -1,0 +1,31 @@
+.real-short-cases { margin: 22px 0 8px; }
+.real-short-cases > h4 { font-size: 18px; margin-bottom: 8px; }
+.real-short-cases .rsc-intro { color: var(--muted); font-size: 14px; line-height: 1.55; }
+.real-short-cases .rsc-case {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  margin: 16px 0;
+  padding: 18px;
+  background: var(--bg);
+}
+.real-short-cases .rsc-case h5 { margin: 0 0 14px; font-size: 17px; line-height: 1.4; }
+.real-short-cases .rsc-pair { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+.real-short-cases .video-card { min-width: 0; }
+.real-short-cases .rsc-label { margin: 0 0 6px; min-height: 2.9em; font-size: 14px; font-weight: 600; line-height: 1.45; }
+.real-short-cases .rsc-label strong { color: var(--ink); }
+.real-short-cases .rsc-phase { display: block; margin: 0 0 9px; font-size: 12px; color: var(--muted); line-height: 1.4; }
+.real-short-cases .video-card video { width: 100%; aspect-ratio: 4 / 3; object-fit: contain; }
+.real-short-cases figcaption { margin-top: 9px; font-size: 14px; line-height: 1.5; color: var(--ink); }
+.real-short-cases .rsc-meta { display: block; margin-top: 5px; font-size: 12px; color: var(--muted); }
+.real-short-cases .rsc-context { margin-top: 14px; border-top: 1px solid var(--line); padding-top: 10px; font-size: 13px; line-height: 1.55; color: var(--muted); }
+.real-short-cases .rsc-context summary { cursor: pointer; width: fit-content; color: var(--blue); }
+.real-short-cases .rsc-context summary:focus-visible { outline: 3px solid var(--blue); outline-offset: 3px; }
+.real-short-cases .rsc-context p { margin: 7px 0 0; }
+.real-short-cases .rsc-observation { display: block; width: min(240px, 100%); margin-top: 10px; font-size: 12px; line-height: 1.45; text-decoration-thickness: 1px; text-underline-offset: 2px; }
+.real-short-cases .rsc-observation img { width: 100%; height: auto; border-radius: 6px; margin-bottom: 4px; }
+@media (max-width: 680px) {
+  .real-short-cases .rsc-pair { grid-template-columns: minmax(0, 1fr); gap: 22px; }
+  .real-short-cases .rsc-case { padding: 14px; }
+  .real-short-cases .rsc-label { min-height: 0; }
+  .real-short-cases .rsc-observation { width: min(240px, 100%); }
+}
