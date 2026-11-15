@@ -34,7 +34,7 @@ section[id], h3[id] { scroll-margin-top: 20px; }
 .hero { text-align: center; padding: 64px 0 28px; }
 .venue { margin: 0 0 12px; color: var(--muted); font-size: 14px; letter-spacing: .08em; text-transform: uppercase; }
 .hero h1 {
-  margin: 0 auto 14px; max-width: 900px;
+  margin: 0 auto 14px; max-width: 100%;
   font: 600 clamp(28px, 4.2vw, 42px)/1.22 Georgia, "Times New Roman", serif;
   letter-spacing: -.01em;
 }
