@@ -6,7 +6,7 @@
   <title>EvoTER: Evolving Embodied Agents via Tool-Use Experience and Reflection</title>
   <meta name="description" content="EvoTER is an experience-driven framework that lets embodied agents self-evolve validated tool-use skills without updating model parameters, from simulation to a real robot.">
   <meta name="robots" content="noindex, nofollow">
-  <link rel="stylesheet" href="style.css?v=20261114-title-two-lines">
+  <link rel="stylesheet" href="style.css?v=20261115-hero-video">
   <link rel="stylesheet" href="assets/real-short-cases/compare.css?v=20261113">
   <script>document.documentElement.classList.add('js');</script>
 </head>
@@ -19,8 +19,12 @@
     <p class="authors">Anonymous Authors</p>
     <nav class="links" aria-label="Resources">
       <a class="btn" href="#sim">Results</a>
-      <a class="btn" href="#videos">Videos</a>
+      <a class="btn" href="#real-short-cases">Videos</a>
     </nav>
+    <figure class="hero-video">
+      <video data-autoplay muted loop playsinline controls preload="metadata" poster="assets/video/hero_long_horizon.jpg" width="1280" height="720" aria-label="Real-robot long-horizon execution on one tabletop: table setting, two-cup hanging, then drawer storage, with a subtask checklist and a recorded-execution-time counter"><source src="assets/video/hero_long_horizon.mp4" type="video/mp4"></video>
+      <figcaption>Three long-horizon tasks executed in sequence on the same tabletop: table setting, two-cup hanging, and drawer storage (11&nbsp;min of recorded execution, 62 tool calls). Recorded tool-call segments are joined and idle time between calls is trimmed; playback speed is shown in the video.</figcaption>
+    </figure>
   </div>
 </header>
 
@@ -89,7 +93,7 @@
     <details class="method-details">
       <summary>Skill representation and validation details</summary>
       <p><strong>Skill contents.</strong> Applicability conditions, tool-call rules, observation-grounded arguments, postcondition checks and recovery guidance, with optional executable scripts. The roles share one frozen multimodal LLM, with separate session contexts and tool permissions.</p>
-      <p><strong>Privileged simulation diagnosis.</strong> After a predefined stagnation threshold, Diagnoser may access simulator state, task predicates and privileged planning tools. Revisions must use deployment-available observations; skills cannot embed privileged coordinates, simulator object identifiers or seed-specific constants. Execution and validation use only ordinary tools.</p>
+      <p><strong>Privileged simulation diagnosis.</strong> After a predefined stagnation threshold, Diagnoser may access simulator state, task predicates and privileged planning tools. Revisions use only deployment-available observations; skills cannot embed privileged coordinates, simulator object identifiers or seed-specific constants. Execution and validation use only ordinary tools.</p>
       <p><strong>Validation and transfer.</strong> Rejected candidates return with validation trajectories for at most a fixed number of revisions. The frozen simulation library initializes real-world evolution, where platform bindings and execution rules adapt to physical feedback while model parameters, ordinary-tool implementations and harness configuration remain fixed within each phase.</p>
     </details>
   </section>
@@ -512,7 +516,7 @@
     <h2 id="real-h">Real-World Transfer and Evolution</h2>
     <p>On a Franka arm with a two-finger soft gripper, simulation-acquired skills initialize the real-robot agent, which keeps evolving from physical feedback. Real-world tools include SAM3 segmentation, YOLO-World detection, AnyGrasp grasp generation, cuRobo motion planning, low-level control, a frozen &pi;<sub>0.5</sub>-based VLA policy and Tether. Within each comparison, conditions share the agent configuration, policy checkpoints, tool implementations, camera access and execution constraints. Skills are updated only between development episodes; evaluation keeps the library frozen and allows replanning and recovery within an episode.</p>
 
-    <h3>Short-horizon: simulation initialization speeds up skill acquisition</h3>
+    <h3 id="short-horizon">Short-horizon: simulation initialization speeds up skill acquisition</h3>
     <p>Three tasks with related procedures in the simulation library. Evolution from an empty library (w/o Sim) is compared with evolution initialized from the frozen simulation library (w/ Sim). Development is capped at 150M total tokens per task. The library is frozen after the first complete success and evaluated in 5 trials with different initial layouts.</p>
     <section class="table-scroll" aria-label="Table: short-horizon real-world evaluation" tabindex="0">
       <table class="results compact">
